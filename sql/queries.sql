@@ -53,3 +53,17 @@ JOIN olist_customers_dataset cu USING (customer_id)
 WHERE o.order_status = 'delivered'
 GROUP BY cu.customer_state
 ORDER BY revenue DESC;
+
+--  середня оцінка (review_score) за категоріями
+SELECT
+	t.product_category_1 AS category_en,
+    ROUND(AVG(r.review_score), 2) AS avg_score,
+    COUNT(*) AS reviews
+FROM olist_order_reviews_dataset r
+JOIN olist_order_items_dataset oi USING (order_id)
+JOIN olist_products_dataset p USING (product_id)
+LEFT JOIN product_category_name_translation t USING (product_category)
+GROUP BY category_en
+HAVING reviews > 50
+ORDER BY avg_score DESC;
+
