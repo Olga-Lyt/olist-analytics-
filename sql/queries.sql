@@ -29,6 +29,17 @@ GROUP BY ym
 ORDER BY ym;
 
 -- Топ-10 категорій
+-- 1) heals beauty,
+-- 2) watches gifts,
+-- 3) bed bath table
+-- 4) sports leisure
+-- 5) computers accessories
+-- 6) furniture decor
+-- 7) housewares
+-- 8) cool stuff
+-- 9) auto
+-- 10) toys
+
 SELECT	
 	t.product_category_1 AS category_en,
     ROUND(SUM(oi.price), 2) AS revenue
@@ -43,6 +54,12 @@ LIMIT 10;
 
 
 -- виторг за штатами (для карти в Tableau)
+-- Найбільший виторг за наступними штатами:
+1) SP 5067633.16
+2) RJ 1759651.13
+3) MG 1552481.83	
+
+	
 SELECT
 	cu.customer_state,
     ROUND(SUM(oi.price), 2) AS revenue,
@@ -55,6 +72,8 @@ GROUP BY cu.customer_state
 ORDER BY revenue DESC;
 
 --  середня оцінка (review_score) за категоріями
+-- Середня оцінка за категоріями варіюється між 3,49 для office furniture до 4,45 для books general interest
+
 SELECT
 	t.product_category_1 AS category_en,
     ROUND(AVG(r.review_score), 2) AS avg_score,
@@ -69,6 +88,8 @@ ORDER BY avg_score DESC;
 
 
 -- середній час доставки (різниця між датою купівлі і датою доставки)
+-- Середній час доставки покупок складає 12,6 днів
+
 SELECT
 	
 	ROUND(AVG(julianday(order_delivered_6) - julianday(order_purchase_t)), 1) AS avg_delivery_days
@@ -76,6 +97,13 @@ FROM olist_orders_dataset
 WHERE order_status = 'delivered' AND order_delivered_6 IS NOT NULL;
 
 --розподіл способів оплати
+-- В залежності від виручки оплата розподілена наступним чином (за спаданням):
+1) credit card 12542084.19
+2) boleto 2869361.27
+3) voucher 379436.87
+4) debit card 217989.79
+
+	
 SELECT
 	payment_type,
     COUNT(*) AS n,
