@@ -75,3 +75,12 @@ SELECT
 FROM olist_orders_dataset
 WHERE order_status = 'delivered' AND order_delivered_6 IS NOT NULL;
 
+--розподіл способів оплати
+SELECT
+	payment_type,
+    COUNT(*) AS n,
+    ROUND(SUM(payment_value), 2) AS total_value
+FROM olist_order_payments_dataset
+GROUP BY payment_type
+ORDER BY n DESC;
+
