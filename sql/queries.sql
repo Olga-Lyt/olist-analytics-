@@ -27,3 +27,16 @@ JOIN olist_order_items_dataset oi USING (order_id)
 WHERE o.order_status = 'delivered'
 GROUP BY ym
 ORDER BY ym;
+
+-- Топ-10 категорій
+SELECT	
+	t.product_category_1 AS category_en,
+    ROUND(SUM(oi.price), 2) AS revenue
+FROM olist_order_items_dataset oi
+JOIN olist_orders_dataset o USING (order_id)
+JOIN  olist_products_dataset p USING (product_id)
+LEFT JOIN product_category_name_translation t USING (product_category)
+WHERE o.order_status = 'delivered'
+GROUP BY category_en
+ORDER BY revenue DESC
+LIMIT 10;
