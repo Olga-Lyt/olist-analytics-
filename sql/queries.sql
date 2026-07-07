@@ -67,3 +67,11 @@ GROUP BY category_en
 HAVING reviews > 50
 ORDER BY avg_score DESC;
 
+
+-- середній час доставки (різниця між датою купівлі і датою доставки)
+SELECT
+	
+	ROUND(AVG(julianday(order_delivered_6) - julianday(order_purchase_t)), 1) AS avg_delivery_days
+FROM olist_orders_dataset
+WHERE order_status = 'delivered' AND order_delivered_6 IS NOT NULL;
+
