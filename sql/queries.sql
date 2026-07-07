@@ -24,6 +24,6 @@ SELECT
     COUNT(DISTINCT o.order_id) AS orders
 FROM olist_orders_dataset o
 JOIN olist_order_items_dataset oi USING (order_id)
-WHERE o.order_status = 'delevered'
+WHERE o.order_status = 'delivered'
 GROUP BY ym
 ORDER BY ym;
